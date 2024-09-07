@@ -31,6 +31,12 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="JMN-E1-CaV" userLabel="0">
                                                     <rect key="frame" x="76" y="-42" width="240" height="128"/>
                                                     <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GM6-Om-4AF" userLabel="Like Button">
                                                     <rect key="frame" x="333" y="4" width="44" height="44"/>
@@ -63,6 +69,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
+                                            <outlet property="dateLabel" destination="2cc-ny-YyO" id="omV-K0-5T0"/>
+                                            <outlet property="likeButton" destination="GM6-Om-4AF" id="GOe-bG-R45"/>
                                             <outlet property="photoImageView" destination="JMN-E1-CaV" id="gbv-Il-Yb1"/>
                                         </connections>
                                     </tableViewCell>

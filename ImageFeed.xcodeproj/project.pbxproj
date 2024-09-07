@@ -14,7 +14,6 @@
 		219F2DA42C85D02100450094 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 219F2DA32C85D02100450094 /* Assets.xcassets */; };
 		219F2DA72C85D02100450094 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 219F2DA62C85D02100450094 /* Base */; };
 		219F2DCF2C89CBCC00450094 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F2DCE2C89CBCC00450094 /* ImagesListCell.swift */; };
-		219F2DD32C89EDDC00450094 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F2DD22C89EDDC00450094 /* Date+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		219F2DA62C85D02100450094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		219F2DA82C85D02100450094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		219F2DCE2C89CBCC00450094 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
-		219F2DD22C89EDDC00450094 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 		219F2D992C85D02000450094 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
-				219F2DD12C89EDC700450094 /* Helpers */,
 				219F2DD02C89CC1100450094 /* ImagesList */,
 				219F2D9A2C85D02000450094 /* AppDelegate.swift */,
 				219F2D9C2C85D02000450094 /* SceneDelegate.swift */,
@@ -79,14 +76,6 @@
 				219F2D9E2C85D02000450094 /* ImagesListViewController.swift */,
 			);
 			path = ImagesList;
-			sourceTree = "<group>";
-		};
-		219F2DD12C89EDC700450094 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				219F2DD22C89EDDC00450094 /* Date+Extensions.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +152,6 @@
 				219F2D9F2C85D02000450094 /* ImagesListViewController.swift in Sources */,
 				219F2DCF2C89CBCC00450094 /* ImagesListCell.swift in Sources */,
 				219F2D9B2C85D02000450094 /* AppDelegate.swift in Sources */,
-				219F2DD32C89EDDC00450094 /* Date+Extensions.swift in Sources */,
 				219F2D9D2C85D02000450094 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
