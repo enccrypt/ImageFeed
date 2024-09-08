@@ -14,4 +14,17 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
+    
+    func configure(with model: CellModel) {
+        dateLabel.text = model.date
+        photoImageView.image = UIImage(named: model.image)
+        
+        if model.indexRow % 2 != 0 {
+            likeButton.imageView?.image = UIImage(named: "Active") ?? UIImage()
+        } else{
+            likeButton.imageView?.image = UIImage(named: "No Active") ?? UIImage()
+        }
+        
+        
+    }
 }

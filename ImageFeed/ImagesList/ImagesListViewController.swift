@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
 
     @IBOutlet private var tableView: UITableView!
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
@@ -20,7 +20,6 @@ class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.rowHeight = 200
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
     }
@@ -28,10 +27,6 @@ class ImagesListViewController: UIViewController {
 }
 
 extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return 0
@@ -68,17 +63,14 @@ extension ImagesListViewController: UITableViewDataSource {
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let imageName = photosName[indexPath.row]
-        cell.photoImageView.image = UIImage(named: imageName) ?? UIImage()
+        //cell.photoImageView.image = UIImage(named: imageName) ?? UIImage()
         
         let date = Date()
         let formattedDate = dateFormatter.string(from: date)
-        cell.dateLabel.text = formattedDate
+        //cell.dateLabel.text = formattedDate
         
-        if indexPath.row % 2 != 0 {
-            cell.likeButton.imageView?.image = UIImage(named: "Active") ?? UIImage()
-        } else{
-            cell.likeButton.imageView?.image = UIImage(named: "No Active") ?? UIImage()
-        }
+        cell.configure(with: CellModel(date: formattedDate, image: imageName, indexRow: indexPath.row))
+       
     }
 }
 
