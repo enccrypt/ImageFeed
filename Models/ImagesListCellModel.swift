@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct CellModel {
-    var date: String
-    var image: String
-    var indexRow: Int
+struct ImagesListCellModel {
+    let date: String
+    let image: String
+    let indexIsEven: Bool
 }

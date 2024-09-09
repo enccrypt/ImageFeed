@@ -63,13 +63,11 @@ extension ImagesListViewController: UITableViewDataSource {
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let imageName = photosName[indexPath.row]
-        //cell.photoImageView.image = UIImage(named: imageName) ?? UIImage()
         
         let date = Date()
         let formattedDate = dateFormatter.string(from: date)
-        //cell.dateLabel.text = formattedDate
         
-        cell.configure(with: CellModel(date: formattedDate, image: imageName, indexRow: indexPath.row))
+        cell.configure(with: ImagesListCellModel(date: formattedDate, image: imageName, indexIsEven: indexPath.row % 2 == 0))
        
     }
 }
