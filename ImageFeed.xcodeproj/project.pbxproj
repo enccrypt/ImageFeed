@@ -15,6 +15,7 @@
 		219F2DA72C85D02100450094 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 219F2DA62C85D02100450094 /* Base */; };
 		219F2DCF2C89CBCC00450094 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F2DCE2C89CBCC00450094 /* ImagesListCell.swift */; };
 		219F2DD62C8DE17100450094 /* ImagesListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F2DD52C8DE17100450094 /* ImagesListCellModel.swift */; };
+		219F2DD82C8F06E400450094 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F2DD72C8F06E400450094 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		219F2DA82C85D02100450094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		219F2DCE2C89CBCC00450094 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		219F2DD52C8DE17100450094 /* ImagesListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellModel.swift; sourceTree = "<group>"; };
+		219F2DD72C8F06E400450094 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 		219F2D992C85D02000450094 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				219F2DD72C8F06E400450094 /* ProfileViewController.swift */,
 				219F2DD02C89CC1100450094 /* ImagesList */,
 				219F2D9A2C85D02000450094 /* AppDelegate.swift */,
 				219F2D9C2C85D02000450094 /* SceneDelegate.swift */,
@@ -160,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				219F2DD82C8F06E400450094 /* ProfileViewController.swift in Sources */,
 				219F2D9F2C85D02000450094 /* ImagesListViewController.swift in Sources */,
 				219F2DCF2C89CBCC00450094 /* ImagesListCell.swift in Sources */,
 				219F2D9B2C85D02000450094 /* AppDelegate.swift in Sources */,
