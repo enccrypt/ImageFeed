@@ -8,6 +8,23 @@
 
 import UIKit
 
+// расширенте для преобразования HEX в UIColor
+extension UIColor {
+    convenience init(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+        
+        var rgb: UInt64 = 0
+        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+        
+        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+        let blue = CGFloat(rgb & 0x0000FF) / 255.0
+        
+        self.init(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+}
+
 final class ProfileViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad() // Вызов родительского метода
@@ -19,13 +36,13 @@ final class ProfileViewController: UIViewController{
         
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 76).isActive = true
+        imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
         imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         
         let nameLabel = UILabel()
         nameLabel.text = "Екатерина Новикова"
         nameLabel.font = .boldSystemFont(ofSize: 23.0)
-        nameLabel.textColor = UIColor.white
+        nameLabel.textColor = UIColor(hex: "#FFFFFF")
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
@@ -35,7 +52,7 @@ final class ProfileViewController: UIViewController{
         let mailLabel = UILabel()
         mailLabel.text = "@ekaterina_nov"
         mailLabel.font = .systemFont(ofSize: 13.0)
-        mailLabel.textColor = UIColor.gray
+        mailLabel.textColor = UIColor(hex: "#AEAFB4")
         mailLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mailLabel)
         
@@ -45,36 +62,17 @@ final class ProfileViewController: UIViewController{
         let helloLabel = UILabel()
         helloLabel.text = "Hello, world!"
         helloLabel.font = .systemFont(ofSize: 13.0)
-        helloLabel.textColor = UIColor.white
+        helloLabel.textColor = UIColor(hex: "#FFFFFF")
         helloLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(helloLabel)
         
         helloLabel.topAnchor.constraint(equalTo: mailLabel.bottomAnchor, constant: 8).isActive = true
         helloLabel.leadingAnchor.constraint(equalTo: mailLabel.leadingAnchor).isActive = true
-        
-        let favoriteLabel = UILabel()
-        favoriteLabel.text = "Избранное"
-        favoriteLabel.font = .boldSystemFont(ofSize: 23.0)
-        favoriteLabel.textColor = UIColor.white
-        favoriteLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(favoriteLabel)
-        
-        favoriteLabel.topAnchor.constraint(equalTo: helloLabel.bottomAnchor, constant: 24).isActive = true
-        favoriteLabel.leadingAnchor.constraint(equalTo: helloLabel.leadingAnchor).isActive = true
-        
-        let savedImage = UIImage(named: "savedImage")
-        let savedImageView = UIImageView(image: savedImage)
-        savedImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(savedImageView)
-        
-        savedImageView.heightAnchor.constraint(equalToConstant: 115).isActive = true
-        savedImageView.widthAnchor.constraint(equalToConstant: 115).isActive = true
-        savedImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 376).isActive = true
-        savedImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 130).isActive = true
+            
         
         let backButton = UIButton()
         backButton.setImage(UIImage(named: "logout"), for: .normal)
-        //backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)  //нужна ли обрабокта нажатия кнопки logout?
+
 
         
         backButton.translatesAutoresizingMaskIntoConstraints = false
@@ -82,5 +80,6 @@ final class ProfileViewController: UIViewController{
         
         backButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
         backButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
+
     }
 }
