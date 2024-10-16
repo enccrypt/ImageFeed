@@ -18,18 +18,16 @@ protocol WebViewViewControllerDelegate: AnyObject {
 }
 
 final class WebViewViewController: UIViewController {
-    
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     
     weak var delegate: WebViewViewControllerDelegate?
-    private let oauth2Service = OAuth2Service()
     
     override func viewDidLoad() {
         super.viewDidLoad() 
+        
         webView.navigationDelegate = self
 
-        //loadAuthView()
         var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString)!
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
@@ -84,25 +82,25 @@ final class WebViewViewController: UIViewController {
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
     
-    private func loadAuthView() {
-        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
-            return
-        }
-
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
-        ]
-
-        guard let url = urlComponents.url else {
-            return
-        }
-
-        let request = URLRequest(url: url)
-        webView.load(request)
-        }
+//    private func loadAuthView() {
+//        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+//            return
+//        }
+//
+//        urlComponents.queryItems = [
+//            URLQueryItem(name: "client_id", value: Constants.accessKey),
+//            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+//            URLQueryItem(name: "response_type", value: "code"),
+//            URLQueryItem(name: "scope", value: Constants.accessScope)
+//        ]
+//
+//        guard let url = urlComponents.url else {
+//            return
+//        }
+//
+//        let request = URLRequest(url: url)
+//        webView.load(request)
+//        }
     
 }
 
@@ -114,16 +112,6 @@ extension WebViewViewController: WKNavigationDelegate {
     ) {
         if let code = code(from: navigationAction) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
-            oauth2Service.fetchOAuthToken(with: code) { result in
-                switch result {
-                case .success(let data):
-                    // Обработка полученных данных токена
-                    print("Token data: \(data)")
-                case .failure(let error):
-                    // Обработка ошибки
-                    print("Error fetching token: \(error)")
-                }
-            }
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
@@ -144,3 +132,5 @@ extension WebViewViewController: WKNavigationDelegate {
         }
     }
 }
+
+

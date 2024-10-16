@@ -7,9 +7,16 @@
 
 import UIKit
 
+//прошла ли авторизация
+protocol AuthViewControllerDelegate: AnyObject {
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
+}
+
 class AuthViewController: UIViewController {
     private let ShowWebViewSegueIdentifier = "ShowWebView"
     
+    weak var delegate: AuthViewControllerDelegate?
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ShowWebViewSegueIdentifier {
             guard
@@ -24,25 +31,24 @@ class AuthViewController: UIViewController {
     
 }
 
+//extension AuthViewController: WebViewViewControllerDelegate {
+//    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+//        delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+//    }
+//    
+//    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
+//        dismiss(animated: true)
+//    }
+//}
+
+
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        let oauthService = OAuth2Service() // Создаём экземпляр сервиса
-
-        oauthService.fetchOAuthToken(with: code) { result in
-            switch result {
-            case .success(let token):
-                print("Successfully fetched token: \(token)")
-                // Здесь можно обновить UI или выполнить дальнейшие действия, например, перейти на главный экран приложения
-
-            case .failure(let error):
-                print("Error fetching token: \(error)")
-                // Обработка ошибку, например, показать алерт пользователю
-            }
-        }
+        print("Authenticated with code: \(code)")  // Для отладки
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
-    
+
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true)
     }
 }
-
