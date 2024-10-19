@@ -8,5 +8,20 @@
 import Foundation
 
 final class OAuth2TokenStorage {
-    var token: String? // TODO [Sprint 10]
+    // MARK: - Public Properties
+    var token: String? {
+        get {
+            storage.string(forKey: Keys.token.rawValue)
+        }
+        set {
+            storage.set(newValue, forKey: Keys.token.rawValue)
+        }
+    }
+    // MARK: - Private Properties
+    private let storage: UserDefaults = .standard
+    
+    private enum Keys: String {
+        case token
+    }
 }
+
