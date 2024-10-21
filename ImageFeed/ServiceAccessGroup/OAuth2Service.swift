@@ -8,19 +8,52 @@
 import Foundation
 
 // для декодирования ответа от Unsplash.
+//struct OAuthTokenResponseBody: Decodable {
+//    let accessToken: String
+//    let tokenType: String
+//    let expiresIn: Int?
+//    let scope: [String]?
+//    
+//    private enum CodingKeys: String, CodingKey {
+//        case accessToken = "access_token"
+//        case tokenType = "token_type"
+//        case expiresIn = "expires_in"
+//        case scope
+//    }
+//    
+//}
+
 struct OAuthTokenResponseBody: Decodable {
     let accessToken: String
     let tokenType: String
-    let expiresIn: Int?
-    let scope: [String]?
-    
-    private enum CodingKeys: String, CodingKey {
+    let scope: [String]
+    let createdAt: Date
+
+    enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case tokenType = "token_type"
-        case expiresIn = "expires_in"
         case scope
+        case createdAt = "created_at"
+    }
+
+    // Кастомное декодирование для поля scope
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        accessToken = try container.decode(String.self, forKey: .accessToken)
+        tokenType = try container.decode(String.self, forKey: .tokenType)
+        
+        // Обрабатываем scope как массив или строку
+        if let scopeArray = try? container.decode([String].self, forKey: .scope) {
+            scope = scopeArray
+        } else {
+            let scopeString = try container.decode(String.self, forKey: .scope)
+            scope = scopeString.components(separatedBy: " ")
+        }
+
+        createdAt = try container.decode(Date.self, forKey: .createdAt)
     }
 }
+
 //
 //
 //final class OAuth2Service {
@@ -102,8 +135,8 @@ final class OAuth2Service {
     }
     
     // MARK: - Initializers
-    init() {}
-    
+    private init() {}
+
     // MARK: - Public Methods
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, any Error>) -> Void) {
         

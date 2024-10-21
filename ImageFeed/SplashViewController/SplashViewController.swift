@@ -35,8 +35,8 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if true {
+        print("splashview appeared")
+        if storage.token != nil {
             switchToTabBarController()
         } else {
             performSegue(withIdentifier: SplashViewControllerConstants.showAuthenticationScreenSegueIdentifier, sender: nil)
