@@ -19,10 +19,8 @@ final class ImagesListCell: UITableViewCell {
         dateLabel.text = model.date
         photoImageView.image = UIImage(named: model.image)
 
-        if model.indexIsEven {
-            likeButton.imageView?.image = UIImage(named: "No Active")
-        } else{
-            likeButton.imageView?.image = UIImage(named: "Active")
-        }
+        let likeImage = model.indexIsEven ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+        likeButton.setImage(likeImage, for: .normal)
+
     }
 }
