@@ -32,6 +32,7 @@ final class ProfileViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad() // Вызов родительского метода
+        view.backgroundColor = UIColor(hex: "1A1B22")
         let profileImage = UIImage(named: "avatar")
         let imageView = UIImageView(image: profileImage)
         profileImage?.withTintColor(.gray)

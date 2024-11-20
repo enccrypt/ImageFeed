@@ -183,22 +183,6 @@
             </objects>
             <point key="canvasLocation" x="973.28244274809151" y="-2.1126760563380285"/>
         </scene>
-        <!--Profile-->
-        <scene sceneID="uet-s3-O24">
-            <objects>
-                <viewController storyboardIdentifier="ProfileViewController" title="Profile" id="Ny7-hF-76C" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="yIC-01-zGa">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="n7J-i0-xQ6"/>
-                        <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_profile_active" id="d1L-I3-cGT"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PQe-oH-HSZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="701.52671755725191" y="-679.57746478873241"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="3xS-vc-RRD">
             <objects>
@@ -405,7 +389,6 @@
         <image name="share_button" width="50" height="50"/>
         <image name="splash_screen_logo" width="72.666664123535156" height="75.333335876464844"/>
         <image name="tab_editorial_active" width="30" height="30"/>
-        <image name="tab_profile_active" width="30" height="30"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
