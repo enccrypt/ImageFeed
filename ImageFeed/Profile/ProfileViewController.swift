@@ -7,6 +7,7 @@
 
 
 import UIKit
+import Kingfisher
 
 // расширенте для преобразования HEX в UIColor
 extension UIColor {
@@ -26,6 +27,9 @@ extension UIColor {
 }
 
 final class ProfileViewController: UIViewController{
+    
+    private var profileImageServiceObserver: NSObjectProtocol?      // 1
+    
     override func viewDidLoad() {
         super.viewDidLoad() // Вызов родительского метода
         let profileImage = UIImage(named: "avatar")
@@ -68,18 +72,56 @@ final class ProfileViewController: UIViewController{
         
         helloLabel.topAnchor.constraint(equalTo: mailLabel.bottomAnchor, constant: 8).isActive = true
         helloLabel.leadingAnchor.constraint(equalTo: mailLabel.leadingAnchor).isActive = true
-            
+        
         
         let backButton = UIButton()
         backButton.setImage(UIImage(named: "logout"), for: .normal)
-
-
+        
+        
         
         backButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(backButton)
         
         backButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
         backButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
-
+        
+        
+        // Получаем профиль из сервиса, если он уже загружен, или делаем асинхронный запрос
+        if let profile = ProfileService.shared.profile {
+            nameLabel.text = profile.name
+            mailLabel.text = profile.loginName
+            helloLabel.text = profile.bio
+        } 
+        
+        profileImageServiceObserver = NotificationCenter.default    // 2
+                .addObserver(
+                    forName: ProfileImageService.didChangeNotification, // 3
+                    object: nil,                                        // 4
+                    queue: .main                                        // 5
+                ) { [weak self] _ in
+                    guard let self = self else { return }
+                    self.updateAvatar()                                 // 6
+                }
+        
+        updateAvatar()
+    }
+                                                          // 10
+    private func updateAvatar() {                                   // 8
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        
+        //ищем imageView с аватаркой, чтобы обновить изображение
+        if let imageView = view.subviews.compactMap( {$0 as? UIImageView }).first {
+            imageView.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "avatar"),
+                options: [
+                    .transition(.fade(0.2)), //плавная анимация на появление
+                    .cacheOriginalImage // кэширование фоточки
+                ]
+            )
+        }
     }
 }
