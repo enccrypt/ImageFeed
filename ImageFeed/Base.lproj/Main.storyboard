@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hvh-0b-VQr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -12,13 +12,13 @@
         <!--Auth View Controller-->
         <scene sceneID="d9V-EL-xS3">
             <objects>
-                <viewController id="tKH-GB-WJY" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthViewController" id="tKH-GB-WJY" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J64-Kz-FAh">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qhg-v0-4HF">
-                                <rect key="frame" x="16" y="714" width="361" height="48"/>
+                                <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="hbw-Hg-T9C"/>
                                 </constraints>
@@ -331,42 +331,13 @@
             </objects>
             <point key="canvasLocation" x="646.56488549618314" y="-1357.0422535211269"/>
         </scene>
-        <!--SplashViewController-->
-        <scene sceneID="PjJ-Uh-MsH">
-            <objects>
-                <viewController storyboardIdentifier="SplashViewController" title="SplashViewController" id="hvh-0b-VQr" customClass="SplashViewController" customModule="ImageFeed" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="GjP-QX-X5s">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="30Y-tw-XJw">
-                                <rect key="frame" x="151" y="331" width="91" height="75.333333333333314"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="nn8-6G-Dts"/>
-                        <color key="backgroundColor" red="0.1019607843" green="0.1058823529" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="30Y-tw-XJw" firstAttribute="top" secondItem="nn8-6G-Dts" secondAttribute="top" constant="272" id="HrO-wm-Bgv"/>
-                            <constraint firstItem="nn8-6G-Dts" firstAttribute="trailing" secondItem="30Y-tw-XJw" secondAttribute="trailing" constant="151" id="ihg-Gt-3JB"/>
-                            <constraint firstItem="30Y-tw-XJw" firstAttribute="leading" secondItem="nn8-6G-Dts" secondAttribute="leading" constant="151" id="moL-i4-M1W"/>
-                        </constraints>
-                    </view>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="D8O-p0-uyc" kind="presentation" identifier="ShowAuthenticationScreen" modalPresentationStyle="fullScreen" id="5qO-O9-1LN"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BkA-Ty-Gzl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2867" y="-486"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="gSn-HT-dde">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="D8O-p0-uyc" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="L9p-GR-Qiq">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -387,7 +358,6 @@
         <image name="like_button_on" width="42" height="42"/>
         <image name="screen_logo" width="60" height="60"/>
         <image name="share_button" width="50" height="50"/>
-        <image name="splash_screen_logo" width="72.666664123535156" height="75.333335876464844"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

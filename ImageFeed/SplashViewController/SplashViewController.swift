@@ -49,35 +49,18 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("SplashView appeared")
         
-        guard let token = storage.token else {
-            performSegue(withIdentifier: SplashViewControllerConstants.showAuthenticationScreenSegueIdentifier, sender: nil)
-            return
+        if let token = storage.token {
+            fetchProfile(token)
         }
         
-        fetchProfile(token)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SplashViewControllerConstants.showAuthenticationScreenSegueIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else {
-                assertionFailure("Failed to prepare for \(SplashViewControllerConstants.showAuthenticationScreenSegueIdentifier)")
-                return
-            }
-            
-            viewController.delegate = self
-            
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+        presentAuthViewController()
     }
     
     // MARK: - AuthViewControllerDelegate
@@ -89,6 +72,27 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     }
     
     // MARK: - Private Methods
+    private func presentAuthViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        guard let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
+            fatalError("AuthViewController not found in Main.storyboard")
+        }
+        authViewController.delegate = self
+        authViewController.modalPresentationStyle = .fullScreen
+        present(authViewController, animated: true, completion: nil)
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = UIColor(hex: "1A1B22")
+        let splashImage = UIImage(named: "splash_screen_logo")
+        let splashLogo = UIImageView(image: splashImage)
+        splashLogo.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(splashLogo)
+        
+        splashLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        splashLogo.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else {
             fatalError("Invalid Configuration")
