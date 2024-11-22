@@ -75,8 +75,10 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private func presentAuthViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         guard let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
-            fatalError("AuthViewController not found in Main.storyboard")
+            assertionFailure("AuthViewController not found in Main.storyboard")
+            return
         }
+        
         authViewController.delegate = self
         authViewController.modalPresentationStyle = .fullScreen
         present(authViewController, animated: true, completion: nil)

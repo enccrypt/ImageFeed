@@ -28,10 +28,10 @@ extension UIColor {
 
 final class ProfileViewController: UIViewController{
     
-    private var profileImageServiceObserver: NSObjectProtocol?      // 1
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
-        super.viewDidLoad() // Вызов родительского метода
+        super.viewDidLoad()
         view.backgroundColor = UIColor(hex: "1A1B22")
         let profileImage = UIImage(named: "avatar")
         let imageView = UIImageView(image: profileImage)
@@ -94,20 +94,20 @@ final class ProfileViewController: UIViewController{
             helloLabel.text = profile.bio
         } 
         
-        profileImageServiceObserver = NotificationCenter.default    // 2
+        profileImageServiceObserver = NotificationCenter.default
                 .addObserver(
-                    forName: ProfileImageService.didChangeNotification, // 3
-                    object: nil,                                        // 4
-                    queue: .main                                        // 5
+                    forName: ProfileImageService.didChangeNotification,
+                    object: nil,
+                    queue: .main
                 ) { [weak self] _ in
                     guard let self = self else { return }
-                    self.updateAvatar()                                 // 6
+                    self.updateAvatar()
                 }
         
         updateAvatar()
     }
-                                                          // 10
-    private func updateAvatar() {                                   // 8
+                                                       
+    private func updateAvatar() {                               
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)

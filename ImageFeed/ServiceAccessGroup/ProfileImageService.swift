@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Структура для декодирования JSON-ответа
+// структура для декодирования JSON-ответа
 struct UserResult: Codable {
     let profileImage: ProfileImage
 
@@ -16,7 +16,7 @@ struct UserResult: Codable {
     }
 }
 
-// Структура для извлечения URL маленькой версии аватарки
+// структура для извлечения URL маленькой версии аватарки
 struct ProfileImage: Codable {
     let small: String
 }
