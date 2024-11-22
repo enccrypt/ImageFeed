@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum AuthServiceError: Error {
+    case invalidRequest
+    case invalidResponse
+}
+
 struct OAuthTokenResponseBody: Decodable {
     let accessToken: String
     let tokenType: String
@@ -20,13 +25,11 @@ struct OAuthTokenResponseBody: Decodable {
         case createdAt = "created_at"
     }
 
-    // Кастомное декодирование для поля scope
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         accessToken = try container.decode(String.self, forKey: .accessToken)
         tokenType = try container.decode(String.self, forKey: .tokenType)
-        
-        // Обрабатываем scope как массив или строку
+
         if let scopeArray = try? container.decode([String].self, forKey: .scope) {
             scope = scopeArray
         } else {
@@ -38,88 +41,95 @@ struct OAuthTokenResponseBody: Decodable {
     }
 }
 
-
 final class OAuth2Service {
-    // MARK: - Public Properties
-    
-    var authToken: String? {
-        get {
-            OAuth2TokenStorage().token
-        }
-        set {
-            OAuth2TokenStorage().token = newValue
-        }
-    }
-    
     static let shared = OAuth2Service()
     
-    // MARK: - Private Properties
     private let decoder = JSONDecoder()
     private let urlSession = URLSession.shared
-    private enum NetworkError: Error {
-        case codeError
-    }
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    private var storage = OAuth2TokenStorage()
     
     private enum OAuth2ServiceConstants {
         static let unsplashGetTokenURLString = "https://unsplash.com/oauth/token"
     }
     
-    // MARK: - Initializers
     private init() {}
 
-    // MARK: - Public Methods
-    func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, any Error>) -> Void) {
+    func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        assert(Thread.isMainThread)
         
-        let request = makeOAuthTokenRequest(code: code)
+        if lastCode == code && task != nil {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+
+        task?.cancel()
+        lastCode = code
         
-        let task = urlSession.data(for: request) { [weak self] result in
+        guard let request = makeOAuthTokenRequest(code: code) else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        
+        task = urlSession.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
             
-            guard let self else { preconditionFailure("self is unavalible") }
-            
-            switch result {
-            case .success(let data):
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("[fetchOAuthToken]: NetworkError - \(error.localizedDescription)")
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let data = data else {
+                    print("[fetchOAuthToken]: InvalidResponse - No data received.")
+                    completion(.failure(AuthServiceError.invalidResponse))
+                    return
+                }
                 
                 do {
-                    let OAuthTokenResponseBody = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    print(OAuthTokenResponseBody)
-                    print(OAuthTokenResponseBody.accessToken)
-                    self.authToken = OAuthTokenResponseBody.accessToken
-                    completion(.success(OAuthTokenResponseBody.accessToken))
+                    let tokenResponse = try self.decoder.decode(OAuthTokenResponseBody.self, from: data)
+                    self.storage.token = tokenResponse.accessToken
+                    print("Received access token: \(tokenResponse.accessToken)")
+                    completion(.success(tokenResponse.accessToken))
                 } catch {
+                    print("[fetchOAuthToken]: DecodingError - \(error.localizedDescription), Data: \(String(data: data, encoding: .utf8) ?? "")")
                     completion(.failure(error))
                 }
                 
-            case .failure(let error):
-                completion(.failure(error))
-                
+                self.task = nil
+                self.lastCode = nil
             }
         }
-        task.resume()
+        
+        task?.resume()
     }
-    
-    func makeOAuthTokenRequest(code: String) -> URLRequest {
-        guard var urlComponents = URLComponents(string: OAuth2ServiceConstants.unsplashGetTokenURLString) else {
-            preconditionFailure("invalide sheme or host name")
+
+    func makeOAuthTokenRequest(code: String) -> URLRequest? {
+        guard let url = URL(string: OAuth2ServiceConstants.unsplashGetTokenURLString) else {
+            return nil
         }
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "client_secret", value: Constants.secretKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "code", value: code),
-            URLQueryItem(name: "grant_type", value: "authorization_code")
-        ]
-        
-        guard let url = urlComponents.url else {
-            preconditionFailure("Cannot make url")
-        }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        print(request)
+        
+        let bodyParameters = [
+            "client_id": Constants.accessKey,
+            "client_secret": Constants.secretKey,
+            "redirect_uri": Constants.redirectURI,
+            "code": code,
+            "grant_type": "authorization_code"
+        ]
+        
+        request.httpBody = bodyParameters
+            .map { "\($0.key)=\($0.value)" }
+            .joined(separator: "&")
+            .data(using: .utf8)
+        
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
         return request
     }
-    // MARK: - Private Methods
-    
 }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 //прошла ли авторизация
 protocol AuthViewControllerDelegate: AnyObject {
@@ -19,8 +20,12 @@ final class AuthViewController: UIViewController {
 
     private let oauth2Service = OAuth2Service.shared
     private let storage = OAuth2TokenStorage()
-
+    private var progressElement = UIBlockingProgressHUD()
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //перехода не будет, если индикатор все еще виден
+        guard !UIBlockingProgressHUD.isShowing else { return }
+        
         if segue.identifier == segueIdentifier {
             guard
                 let webViewViewController = segue.destination as? WebViewViewController
@@ -37,10 +42,39 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         print("Authenticated with code: \(code)")  // Для отладки
-        delegate?.authViewController(self, didAuthenticateWithCode: code)
+        vc.dismiss(animated: true)
+        UIBlockingProgressHUD.show()
+        
+        oauth2Service.fetchOAuthToken(code) { [weak self] result in
+            guard let self = self else { return }
+
+            UIBlockingProgressHUD.dismiss()
+            
+            switch result {
+            case .success(let token):  // Получаем токен из результата
+                ProfileService.shared.fetchProfile(token) { profileResult in
+                    DispatchQueue.main.async {
+                        switch profileResult {
+                        case .success:
+                            // Успешно получили профиль, вызываем делегат
+                            self.delegate?.authViewController(self, didAuthenticateWithCode: code)
+                        case .failure(let error):
+                            print("Failed to fetch profile: \(error)")
+                            // Показываем алерт с ошибкой
+                            self.showErrorAlert(message: "Не удалось получить профиль пользователя.")
+                        }
+                    }
+            }
+            case .failure(let error):
+                print("Failed to fetch OAuth token: \(error.localizedDescription)")
+                // Показываем алерт с ошибкой
+                self.showErrorAlert(message: "Не удалось получить профиль пользователя.")
+            }
+        }
     }
 
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
+        guard !UIBlockingProgressHUD.isShowing else { return }
         dismiss(animated: true)
     }
     
@@ -49,5 +83,19 @@ extension AuthViewController: WebViewViewControllerDelegate {
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "nav_back_button")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor? = UIColor.black
+    }
+    
+    // Функция для отображения алерта с ошибкой
+    private func showErrorAlert(message: String) {
+        let alertController = UIAlertController(
+            title: "Что-то пошло не так",
+            message: message,
+            preferredStyle: .alert
+        )
+            
+        let okAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
+        alertController.addAction(okAction)
+            
+        present(alertController, animated: true, completion: nil)
     }
 }
