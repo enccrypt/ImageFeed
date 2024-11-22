@@ -14,6 +14,9 @@ final class ImagesListViewController: UIViewController {
     // MARK: - Private Properties
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
+    private let imagesListService = ImagesListService.shared
+    private var photos: [Photo] = []
+    
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -24,8 +27,24 @@ final class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-
+        
+        // подпичываемся на уведомление о новых данных
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onPhotosUpdated),
+            name: ImagesListService.didChangeNotification,
+            object: nil
+        )
+        
+        // Загружаем первую страницу
+        imagesListService.fetchPhotosNextPage()
     }
+    
+    @objc private func onPhotosUpdated() {
+        photos = imagesListService.photos
+        tableView.reloadData()
+    }
+
     
     // MARK: - Overrides Methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,7 +88,7 @@ extension ImagesListViewController: UITableViewDelegate {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,21 +98,23 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        
-        configCell(for: imageListCell, with: indexPath)
+        let photo = photos[indexPath.row]
+        configCell(for: imageListCell, with: photo)
 
         return imageListCell
     }
 }
 
 extension ImagesListViewController {
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        let imageName = photosName[indexPath.row]
-        
-        let date = Date()
-        let formattedDate = dateFormatter.string(from: date)
-        
-        cell.configure(with: ImagesListCellModel(date: formattedDate, image: imageName, indexIsEven: indexPath.row % 2 == 0))
+    func configCell(for cell: ImagesListCell, with photo: Photo) {
+        // Если дата существует, отформатируем её
+            let formattedDate = photo.createdAt.flatMap { dateFormatter.string(from: $0) } ?? "No date"
+
+        cell.configure(with: ImagesListCellModel(
+            date: formattedDate,
+            image: photo.thumbImageURL, //url вместо имени
+            indexIsEven: photo.isLiked))
+
        
     }
 }
