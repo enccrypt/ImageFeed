@@ -12,6 +12,7 @@ final class ImagesListService {
     
     static let shared = ImagesListService()
     
+    private let storage = OAuth2TokenStorage()
     private var isFetching = false
     private var currentPage = 0
     private let photosPerPage = 10
@@ -46,8 +47,10 @@ final class ImagesListService {
         }
         
         var request = URLRequest(url: url)
-        request.addValue("Client-ID \(Constants.accessKey)", forHTTPHeaderField: "Authorization")
-
+        if let token = storage.token {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+                
         let task = urlSession.dataTask(with: request) { [weak self] data, response, error in
             guard let self = self else { return }
             self.isFetching = false

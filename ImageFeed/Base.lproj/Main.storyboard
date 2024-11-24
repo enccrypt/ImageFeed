@@ -154,7 +154,7 @@
                                         <connections>
                                             <outlet property="dateLabel" destination="2cc-ny-YyO" id="omV-K0-5T0"/>
                                             <outlet property="likeButton" destination="GM6-Om-4AF" id="GOe-bG-R45"/>
-                                            <outlet property="photoImageView" destination="JMN-E1-CaV" id="gbv-Il-Yb1"/>
+                                            <outlet property="photoImageView" destination="JMN-E1-CaV" id="mv4-bh-Rzs"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

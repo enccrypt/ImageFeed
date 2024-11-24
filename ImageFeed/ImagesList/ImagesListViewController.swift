@@ -4,16 +4,15 @@
 //
 //  Created by Islam Tagirov on 02.09.2024.
 //
+
 import Foundation
 import UIKit
+import Kingfisher
 
 final class ImagesListViewController: UIViewController {
-    // MARK: - IB Outlets
     @IBOutlet private var tableView: UITableView!
     
-    // MARK: - Private Properties
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let imagesListService = ImagesListService.shared
     private var photos: [Photo] = []
     
@@ -26,9 +25,9 @@ final class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
-        // подпичываемся на уведомление о новых данных
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onPhotosUpdated),
@@ -36,57 +35,41 @@ final class ImagesListViewController: UIViewController {
             object: nil
         )
         
-        // Загружаем первую страницу
         imagesListService.fetchPhotosNextPage()
     }
     
     @objc private func onPhotosUpdated() {
-        photos = imagesListService.photos
-        tableView.reloadData()
+        let newPhotos = imagesListService.photos
+        let oldCount = photos.count
+        photos = newPhotos
+        
+        if oldCount < photos.count {
+            let newIndexPaths = (oldCount..<photos.count).map { IndexPath(row: $0, section: 0) }
+            tableView.performBatchUpdates {
+                tableView.insertRows(at: newIndexPaths, with: .automatic)
+            }
+        }
     }
 
-    
-    // MARK: - Overrides Methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
             guard
                 let viewController = segue.destination as? SingleImageViewController,
                 let indexPath = sender as? IndexPath
-            else {
-                assertionFailure("Invalid segue destination")
-                return
+            else { return }
+            
+            let photo = photos[indexPath.row]
+            if let url = URL(string: photo.largeImageURL) {
+                viewController.imageURL = url
+            } else {
+                print("Invalid URL string: \(photo.largeImageURL)")
             }
-
-            let image = UIImage(named: photosName[indexPath.row])
-            //_ = viewController.view // CRASH FIXED !?
-            viewController.image = image
-        } else {
-            super.prepare(for: segue, sender: sender)
         }
     }
-    
+
 }
 
-extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return 0
-        }
-        
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let imageWidth = image.size.width
-        let scale = imageViewWidth / imageWidth
-        let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
-        return cellHeight
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
-    }
-}
-
-extension ImagesListViewController: UITableViewDataSource {
+extension ImagesListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
     }
@@ -97,26 +80,22 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-
+        
         let photo = photos[indexPath.row]
-        configCell(for: imageListCell, with: photo)
-
+        imageListCell.configure(with: photo)
+        
         return imageListCell
     }
-}
-
-extension ImagesListViewController {
-    func configCell(for cell: ImagesListCell, with photo: Photo) {
-        // Если дата существует, отформатируем её
-            let formattedDate = photo.createdAt.flatMap { dateFormatter.string(from: $0) } ?? "No date"
-
-        cell.configure(with: ImagesListCellModel(
-            date: formattedDate,
-            image: photo.thumbImageURL, //url вместо имени
-            indexIsEven: photo.isLiked))
-
-       
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == photos.count - 1 {
+            imagesListService.fetchPhotosNextPage()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let photo = photos[indexPath.row]
+        let width = tableView.bounds.width - 32
+        return width * photo.aspectRatio + 16
     }
 }
-
-

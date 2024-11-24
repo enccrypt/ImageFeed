@@ -45,6 +45,7 @@ struct Photo {
     let welcomeDescription: String?
     let thumbImageURL: String
     let largeImageURL: String
+    let aspectRatio: CGFloat
     let isLiked: Bool
 }
 
@@ -56,6 +57,9 @@ extension Photo {
         // Преобразуем строку в дату, если она существует
         let date = photoResult.createdAt.flatMap { dateFormatter.date(from: $0) }
         
+        // подсчет соотношения ширины к высоте
+        let aspectRatio = CGFloat(photoResult.width) / CGFloat(photoResult.height)
+
         // Создаем объект Photo с использованием полученной даты
         return Photo(
             id: photoResult.id,
@@ -63,7 +67,7 @@ extension Photo {
             createdAt: date,
             welcomeDescription: photoResult.description ?? "No description available", // Если описание пустое
             thumbImageURL: photoResult.urls.thumb,
-            largeImageURL: photoResult.urls.full,
+            largeImageURL: photoResult.urls.full, aspectRatio: aspectRatio,
             isLiked: photoResult.likedByUser
         )
     }
