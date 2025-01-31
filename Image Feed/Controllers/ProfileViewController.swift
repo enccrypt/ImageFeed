@@ -270,6 +270,6 @@ final class ProfileViewController: UIViewController {
             avatarImageView.kf.indicatorType = .activity
             
             let processor = RoundCornerImageProcessor(cornerRadius: 20)
-            avatarImageView.kf.setImage(with: url, options: [.processor(processor)])
+            avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.jpeg"), options: [.processor(processor)])
         }
 }

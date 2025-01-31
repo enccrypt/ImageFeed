@@ -14,8 +14,8 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
     
     private lazy var dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
-            formatter.dateFormat = "dd MMMM yyyy"
-            formatter.locale = Locale(identifier: "ru_RU")
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
             return formatter
     }()
     
@@ -125,30 +125,31 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
-    
+        
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        let photo = photos[indexPath.row]
-        
-        cell.cellImage.kf.cancelDownloadTask()
-        //cell.cellImage.image = nil
-        
-        cell.cellImage.kf.indicatorType = .activity
-        cell.delegate = self
-        
-        cell.dateLabel.text = dateFormatter.string(from: photo.createdAt ?? Date())
-        cell.setIsLiked(photo.isLiked)
-        
-        let processor = RoundCornerImageProcessor(cornerRadius: 16)
-        
-        cell.cellImage.kf.setImage(
-            with: photo.thumbImageURL,
-            options: [
-                .processor(processor),
-                .transition(.fade(0.25)),
-                .cacheOriginalImage,
-            ]
-        )
-    }
+            let photo = photos[indexPath.row]
+            
+            cell.cellImage.kf.cancelDownloadTask()
+            cell.cellImage.image = nil
+            
+            cell.cellImage.kf.indicatorType = .activity
+            cell.delegate = self
+            
+            cell.dateLabel.text = dateFormatter.string(from: photo.createdAt ?? Date())
+            cell.setIsLiked(photo.isLiked)
+            
+            let processor = RoundCornerImageProcessor(cornerRadius: 16)
+            
+            cell.cellImage.kf.setImage(
+                with: photo.thumbImageURL,
+                placeholder: UIImage(named: "stub"),
+                options: [
+                    .processor(processor),
+                    .transition(.fade(0.25)),
+                    .cacheOriginalImage,
+                ]
+            )
+        }
     
     func imagesListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
