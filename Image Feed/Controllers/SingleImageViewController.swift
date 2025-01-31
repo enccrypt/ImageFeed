@@ -65,19 +65,7 @@ final class SingleImageViewController: UIViewController {
         UIBlockingProgressHUD.show()
         
         imageView.kf.setImage(
-            with: largeImageURL,
-            placeholder: UIImage(named: "placeholder")) { [weak self] result in
-                UIBlockingProgressHUD.dismiss()
-                
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let imageResult):
-                    self.rescaleAndCenterImageInScrollView(image: imageResult.image)
-                case .failure(let error):
-                    self.showError()
-                }
-            }
+            with: largeImageURL)
     }
     
     private func showError() {

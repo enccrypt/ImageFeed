@@ -238,23 +238,38 @@ final class ProfileViewController: UIViewController {
         print("ProfileViewController: UI обновлен с данными профиля") // Лог ошибок
     }
     
+//    private func updateAvatar() {
+//        print("\(#file):\(#line)] \(#function) начало updateAvatar")
+//        
+//        guard
+//            let profileImageURL = ProfileImageService.shared.avatarURL,
+//            let url = URL(string: profileImageURL)
+//        else {
+//            print("\(#file):\(#line)] \(#function) нет URL для аватарки")
+//            return
+//        }
+//        
+//        print("\(#file):\(#line)] \(#function) пытаемся загрузить аватарку с URL: \(url)") // Лог ошибок
+//        
+//        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+//        avatarImageView.kf.indicatorType = .activity
+//        avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.jpeg"), options: [.processor(processor)])
+//        
+//        print("ProfileViewController: URLService.avatarURL = \(String(describing: ProfileImageService.shared.avatarURL))")
+//    }
+    
     private func updateAvatar() {
-        print("\(#file):\(#line)] \(#function) начало updateAvatar")
-        
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-        else {
-            print("\(#file):\(#line)] \(#function) нет URL для аватарки")
-            return
+            guard
+                let profileImageURL = ProfileImageService.shared.avatarURL,
+                let url = URL(string: profileImageURL)
+            else {
+                print("No URL for avatar")
+                return
+            }
+            
+            avatarImageView.kf.indicatorType = .activity
+            
+            let processor = RoundCornerImageProcessor(cornerRadius: 20)
+            avatarImageView.kf.setImage(with: url, options: [.processor(processor)])
         }
-        
-        print("\(#file):\(#line)] \(#function) пытаемся загрузить аватарку с URL: \(url)") // Лог ошибок
-        
-        let processor = RoundCornerImageProcessor(cornerRadius: 20)
-        avatarImageView.kf.indicatorType = .activity
-        avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.jpeg"), options: [.processor(processor)])
-        
-        print("ProfileViewController: URLService.avatarURL = \(String(describing: ProfileImageService.shared.avatarURL))")
-    }
 }

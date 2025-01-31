@@ -13,11 +13,12 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
     private var imagesListServiceObserver: NSObjectProtocol?
     
     private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd MMMM yyyy"
+            formatter.locale = Locale(identifier: "ru_RU")
+            return formatter
     }()
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -129,7 +130,7 @@ extension ImagesListViewController: UITableViewDelegate {
         let photo = photos[indexPath.row]
         
         cell.cellImage.kf.cancelDownloadTask()
-        cell.cellImage.image = nil
+        //cell.cellImage.image = nil
         
         cell.cellImage.kf.indicatorType = .activity
         cell.delegate = self
@@ -141,7 +142,6 @@ extension ImagesListViewController: UITableViewDelegate {
         
         cell.cellImage.kf.setImage(
             with: photo.thumbImageURL,
-            placeholder: UIImage(named: "stub"),
             options: [
                 .processor(processor),
                 .transition(.fade(0.25)),
