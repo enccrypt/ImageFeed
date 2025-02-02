@@ -1,4 +1,5 @@
 import UIKit
+<<<<<<< HEAD
 import Kingfisher
 
 protocol ImagesListCellDelegate: AnyObject {
@@ -8,10 +9,16 @@ protocol ImagesListCellDelegate: AnyObject {
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     weak var delegate: ImagesListCellDelegate?
+=======
+
+final class ImagesListCell: UITableViewCell {
+    static let reuseIdentifier = "ImagesListCell"
+>>>>>>> sprint_11
     
     @IBOutlet var cellImage: UIImageView!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var dateLabel: UILabel!
+<<<<<<< HEAD
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
            super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,4 +47,6 @@ final class ImagesListCell: UITableViewCell {
         let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
         likeButton.setImage(likeImage, for: .normal)
     }
+=======
+>>>>>>> sprint_11
 }
