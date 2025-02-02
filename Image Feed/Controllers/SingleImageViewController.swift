@@ -62,10 +62,30 @@ final class SingleImageViewController: UIViewController {
     
     private func loadLargeImage() {
         guard let largeImageURL = largeImageURL else { return }
+        
+        // Показываем индикаторр загрузки
         UIBlockingProgressHUD.show()
         
         imageView.kf.setImage(
-            with: largeImageURL)
+            with: largeImageURL,
+            options: [], // Можно добавить дополнительные опции, если нужно
+            completionHandler: { [weak self] result in
+                // Скрываем индикатор загрузки после завершения загрузки
+                UIBlockingProgressHUD.dismiss()
+                
+                // Дополнительная обработка результата, если необходимо
+                switch result {
+                case .success(let value):
+                    print("Изображение успешно загружено: \(value.source.url?.absoluteString ?? "Неизвестный URL")")
+                case .failure(let error):
+                    print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                    // покажем пользователю сообщение об ошибке или заглушку
+                    DispatchQueue.main.async {
+                        self?.imageView.image = UIImage(named: "placeholder_image")
+                    }
+                }
+            }
+        )
     }
     
     private func showError() {
