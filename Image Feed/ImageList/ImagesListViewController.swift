@@ -135,8 +135,12 @@ extension ImagesListViewController: UITableViewDelegate {
             cell.cellImage.kf.indicatorType = .activity
             cell.delegate = self
             
-            cell.dateLabel.text = dateFormatter.string(from: photo.createdAt ?? Date())
-            cell.setIsLiked(photo.isLiked)
+            // Если createdAt == nil, оставляем dateLabel пустым
+            if let createdAt = photo.createdAt {
+                cell.dateLabel.text = dateFormatter.string(from: createdAt)
+            } else {
+                cell.dateLabel.text = "" // Очищаем метку, если дата отсутствует
+            }            cell.setIsLiked(photo.isLiked)
             
             let processor = RoundCornerImageProcessor(cornerRadius: 16)
             
@@ -149,7 +153,7 @@ extension ImagesListViewController: UITableViewDelegate {
                     .cacheOriginalImage,
                 ]
             )
-        }
+    }
     
     func imagesListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
