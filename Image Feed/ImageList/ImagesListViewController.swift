@@ -140,7 +140,9 @@ extension ImagesListViewController: UITableViewDelegate {
                 cell.dateLabel.text = dateFormatter.string(from: createdAt)
             } else {
                 cell.dateLabel.text = "" // Очищаем метку, если дата отсутствует
-            }            cell.setIsLiked(photo.isLiked)
+            }
+            
+            cell.setIsLiked(photo.isLiked)
             
             let processor = RoundCornerImageProcessor(cornerRadius: 16)
             
