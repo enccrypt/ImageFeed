@@ -2,7 +2,7 @@
 //  TabBarController.swift
 //  Image Feed
 //
-//  Created by Kaider on 22.10.2024.
+//  Created by Kaider on 02.02.2025
 //
 
 import UIKit

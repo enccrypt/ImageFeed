@@ -2,7 +2,7 @@
 //  ImageListPresenter.swift
 //  Image Feed
 //
-//  Created by Kaider on 12.11.2024.
+//  Created by Kaider on 02.02.2025
 //
 
 import Foundation

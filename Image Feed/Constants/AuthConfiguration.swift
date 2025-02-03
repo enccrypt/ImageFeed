@@ -2,7 +2,7 @@
 //  Constants.swift
 //  Image Feed
 //
-//  Created by Kaider on 19.09.2024.
+//  Created by Kaider on 02.02.2025
 //
 
 import Foundation

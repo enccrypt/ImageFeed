@@ -2,7 +2,7 @@
 //  WebViewPresenter.swift
 //  Image Feed
 //
-//  Created by Kaider on 10.11.2024.
+//  Created by Kaider on 02.02.2025
 //
 
 import Foundation
