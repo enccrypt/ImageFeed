@@ -121,6 +121,8 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         
         let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
             self?.presenter?.performLogout()
+            Kingfisher.ImageCache.default.clearMemoryCache()
+            Kingfisher.ImageCache.default.clearDiskCache()
         }
         let noAction = UIAlertAction(title: "Нет", style: .cancel)
         

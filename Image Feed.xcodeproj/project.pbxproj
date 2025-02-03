@@ -98,7 +98,7 @@
 		21C3C5AD2D50DCD000BE5716 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		21C3C5AF2D50DD0000BE5716 /* ImageListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListPresenter.swift; sourceTree = "<group>"; };
 		21C3C5B62D50E5A600BE5716 /* ImageFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		21C3C5F12D50F23700BE5716 /* Image FeedUITests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Image FeedUITests"; sourceTree = SOURCE_ROOT; };
+		21C3C5F12D50F23700BE5716 /* Image FeedUITests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Image FeedUITests"; sourceTree = "<group>"; };
 		21C3C6032D50F83800BE5716 /* ImageFeedUiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedUiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C3C6082D50F84B00BE5716 /* ImageFeed UnitTests2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ImageFeed UnitTests2.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C3C6152D50F8AF00BE5716 /* ImageFeedUiTests2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedUiTests2.xctest; sourceTree = BUILT_PRODUCTS_DIR; };

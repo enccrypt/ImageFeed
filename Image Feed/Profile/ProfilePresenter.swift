@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Kingfisher
 import WebKit
 
 final class ProfilePresenter: ProfilePresenterProtocol {
@@ -34,8 +33,6 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func performLogout() {
         tokenStorage.token = nil
         
-        Kingfisher.ImageCache.default.clearMemoryCache()
-        Kingfisher.ImageCache.default.clearDiskCache()
         
         WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
             records.forEach { record in

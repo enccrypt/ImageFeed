@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-final class ImagesListViewController: UIViewController & ImageListViewControllerProtocol, ImagesListCellDelegate {
+final class ImagesListViewController: UIViewController, ImageListViewControllerProtocol, ImagesListCellDelegate {
     private let showSingleImageSegueIdentifier: String = "ShowSingleImage"
     
     @IBOutlet private var tableView: UITableView!
