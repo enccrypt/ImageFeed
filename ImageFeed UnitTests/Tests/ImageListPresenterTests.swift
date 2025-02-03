@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Image_Feed
+@testable import ImageFeed
 
 final class ImageListPresenterTests: XCTestCase {
     var presenter: ImageListPresenterSpy!
