@@ -2,11 +2,11 @@
 //  Image_FeedTests.swift
 //  Image FeedTests
 //
-//  Created by Kaider on 02.02.2025.
+//  Created by Kaider on 10.11.2024.
 //
 
 import XCTest
-@testable import ImageFeed
+@testable import Image_Feed
 
 final class WebViewTests: XCTestCase {
     
