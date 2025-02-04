@@ -32,10 +32,9 @@ final class WebViewPresenter: WebViewPresenterProtocol {
     
     func viewDidLoad() {
         // убрал создание urlComponents
-        guard let request = authHelper.authRequest() else { return }
         
         guard let request = authHelper.authRequest() else { return }
-        
+                
         view?.load(request: request)
         didUpdateProgressValue(0)
     }

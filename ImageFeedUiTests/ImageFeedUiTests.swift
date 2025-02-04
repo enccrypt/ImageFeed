@@ -63,11 +63,13 @@ class Image_FeedUITests: XCTestCase {
         XCTAssertTrue(likeButton.exists, "Кнопка лайка не найдена")
         
         let initialState = likeButton.value as? String
+        print("СОСТОЯНИЕ ЛАЙКА \(type(of: initialState))")
         sleep(2)
         likeButton.tap()
         sleep(5)
         
         let stateAfterFirstTap = likeButton.value as? String
+        print("СОСТОЯНИЕ ЛАЙКА \(stateAfterFirstTap ?? "NO VALUE IN AFTER")")
         sleep(2)
         XCTAssertNotEqual(initialState, stateAfterFirstTap, "Состояние кнопки не изменилось после первого нажатия")
         

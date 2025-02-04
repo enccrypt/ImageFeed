@@ -12,10 +12,10 @@ final class ImagesListViewController: UIViewController, ImageListViewControllerP
     private var presenter: ImageListPresenterProtocol?
     
     private lazy var dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd MMMM yyyy"
-            formatter.locale = Locale(identifier: "ru_RU")
-            return formatter
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM yyyy"
+        formatter.locale = Locale(identifier: "ru_RU")
+        return formatter
     }()
     
     // MARK: - Lifecycle

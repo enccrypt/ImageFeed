@@ -73,8 +73,10 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     
     private func updateProgress(_ newValue: Double) {
         let newProgressValue = Float(newValue)
-        setProgressValue(newProgressValue)
-        
+        DispatchQueue.main.async {
+            self.setProgressValue(newProgressValue)
+        }
+
         if let shouldHideProgress = presenter?.shouldHideProgress(for: newProgressValue){
             setProgressHidden(shouldHideProgress)
         }
