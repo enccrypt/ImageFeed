@@ -5,6 +5,7 @@
 //  Created by Kaider on 02.02.2025
 //
 
+//Вот же вспомогательный класс-хелпер AuthHelper для работы с URLRequest и URL;
 import Foundation
 
 protocol AuthHelperProtocol {
