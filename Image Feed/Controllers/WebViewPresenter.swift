@@ -14,6 +14,8 @@ public protocol WebViewPresenterProtocol {
     func viewDidLoad()
     func didUpdateProgressValue(_ newValue: Double)
     func code(from url: URL) -> String?
+    func shouldAuthenticate(for url: URL) -> String?
+    func shouldHideProgress(for value: Float) -> Bool
 }
 
 // MARK: - WebViewPresenter
@@ -38,6 +40,11 @@ final class WebViewPresenter: WebViewPresenterProtocol {
         view?.load(request: request)
         didUpdateProgressValue(0)
     }
+    
+    func shouldAuthenticate(for url: URL) -> String? {
+        return code(from: url)
+    }
+
     
     func didUpdateProgressValue(_ newValue: Double) {
         let newProgressValue = Float(newValue)
