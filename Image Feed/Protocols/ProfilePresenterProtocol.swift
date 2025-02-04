@@ -12,6 +12,7 @@ protocol ProfilePresenterProtocol {
     var profileService: ProfileService { get }
     var profileImageService: ProfileImageService { get }
     var tokenStorage: OAuth2TokenStorage { get }
+    func showSplashScreen() // Новый метод для смены экрана
     
     func viewDidLoad()
     func logout()

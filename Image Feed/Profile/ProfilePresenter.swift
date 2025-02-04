@@ -26,6 +26,10 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         updateProfile()
     }
     
+    func showSplashScreen() {
+        view?.showSplashScreen()
+    }
+
     func logout() {
         view?.showLogoutAlert()
     }
@@ -44,18 +48,8 @@ final class ProfilePresenter: ProfilePresenterProtocol {
             }
         }
         
-        if let window = UIApplication.shared.windows.first {
-            let splashViewController = SplashViewController()
-            window.rootViewController = splashViewController
-            
-            UIView.transition(
-                with: window,
-                duration: 0.3,
-                options: .transitionCrossDissolve,
-                animations: nil,
-                completion: nil
-            )
-        }
+        view?.showSplashScreen()
+
     }
     
     func updateAvatar() {

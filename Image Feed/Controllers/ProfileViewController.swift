@@ -74,8 +74,24 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         presenter?.viewDidLoad()
     }
     
-    // MARK: - Private Setup Methods
+    func showSplashScreen() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        
+        let splashViewController = SplashViewController()
+        window.rootViewController = splashViewController
+        
+        UIView.transition(
+            with: window,
+            duration: 0.3,
+            options: .transitionCrossDissolve,
+            animations: nil,
+            completion: nil
+        )
+    }
+
     
+    // MARK: - Private Setup Methods
+
     private func setupUI() {
         view.backgroundColor = UIColor(named: "background")
         [avatarImageView, nameLabel, usernameLabel, messageLabel, exitButton].forEach {
