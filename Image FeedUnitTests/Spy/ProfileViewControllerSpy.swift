@@ -12,6 +12,7 @@ final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     var updateProfileDetailsCalled = false
     var updateAvatarCalled = false
     var showLogoutAlertCalled = false
+    var showSplashScreenCalled = false
     
     func updateProfileDetails(profile: ProfileModels.Profile) {
         updateProfileDetailsCalled = true
@@ -23,5 +24,9 @@ final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     
     func showLogoutAlert() {
         showLogoutAlertCalled = true
+    }
+    
+    func showSplashScreen() {
+        showSplashScreenCalled = true
     }
 }

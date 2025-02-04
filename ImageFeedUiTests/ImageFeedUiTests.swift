@@ -122,5 +122,9 @@ class Image_FeedUITests: XCTestCase {
         let yesButton = alert.buttons["Да"]
         XCTAssertTrue(yesButton.exists, "Кнопка 'Да' не найдена")
         yesButton.tap()
+        
+        // добавил проверку появления кнопки входа
+        let loginButton = app.buttons["login button"] // замените на актуальное имя кнопки
+        XCTAssertTrue(loginButton.exists, "Кнопка входа не появилась после выхода")
     }
 }

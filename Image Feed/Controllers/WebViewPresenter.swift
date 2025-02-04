@@ -31,9 +31,8 @@ final class WebViewPresenter: WebViewPresenterProtocol {
     }
     
     func viewDidLoad() {
-        guard var urlComponents = URLComponents(string: Constants.unsplashAuthorizeURLString) else {
-            return
-        }
+        // убрал создание urlComponents
+        guard let request = authHelper.authRequest() else { return }
         
         guard let request = authHelper.authRequest() else { return }
         

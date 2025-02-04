@@ -19,8 +19,17 @@ final class WebViewPresenterSpy: WebViewPresenterProtocol {
     }
     
     func didUpdateProgressValue(_ newValue: Double) {
-    
+        // оставлю пустым, тесты не проверяют этот метод?
     }
+    
+    func shouldHideProgress(for value: Float) -> Bool {
+        return abs(value - 1.0) <= 0.0001
+    }
+    
+    func shouldAuthenticate(for url: URL) -> String? {
+        return code(from: url)
+    }
+
     
     func code(from url: URL) -> String? {
         return nil
