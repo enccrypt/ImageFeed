@@ -1,8 +1,8 @@
 //
-//  ProfilePresenterSpy.swift
-//  Image FeedTests
+//  ProfilePresenter.swift
+//  ImageFeed
 //
-//  Created by Kaider on 02.02.2025.
+//  Created by Islam Tagirov on 04.02.2025.
 //
 
 @testable import Image_Feed
