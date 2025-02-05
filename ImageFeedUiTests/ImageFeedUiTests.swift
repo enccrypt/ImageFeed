@@ -124,7 +124,7 @@ class Image_FeedUITests: XCTestCase {
         yesButton.tap()
         
         // добавил проверку появления кнопки входа
-        let loginButton = app.buttons["login button"] // замените на актуальное имя кнопки
+        let loginButton = app.buttons["Authenticate"] // замените на актуальное имя кнопки
         sleep(5)
         XCTAssertTrue(loginButton.exists, "Кнопка входа не появилась после выхода")
     }
