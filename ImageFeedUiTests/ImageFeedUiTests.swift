@@ -63,13 +63,11 @@ class Image_FeedUITests: XCTestCase {
         XCTAssertTrue(likeButton.exists, "Кнопка лайка не найдена")
         
         let initialState = likeButton.value as? String
-        print("СОСТОЯНИЕ ЛАЙКА \(type(of: initialState))")
         sleep(2)
         likeButton.tap()
         sleep(5)
         
         let stateAfterFirstTap = likeButton.value as? String
-        print("СОСТОЯНИЕ ЛАЙКА \(stateAfterFirstTap ?? "NO VALUE IN AFTER")")
         sleep(2)
         XCTAssertNotEqual(initialState, stateAfterFirstTap, "Состояние кнопки не изменилось после первого нажатия")
         
@@ -108,7 +106,7 @@ class Image_FeedUITests: XCTestCase {
         sleep(2)
         
         let nameLabel = app.staticTexts["Islam Tagirov"]
-        let usernameLabel = app.staticTexts["enccrypt"]
+        let usernameLabel = app.staticTexts["@enccrypt"]
         
         XCTAssertTrue(nameLabel.exists, "Имя пользователя не найдено")
         XCTAssertTrue(usernameLabel.exists, "Логин пользователя не найден")
@@ -127,6 +125,7 @@ class Image_FeedUITests: XCTestCase {
         
         // добавил проверку появления кнопки входа
         let loginButton = app.buttons["login button"] // замените на актуальное имя кнопки
+        sleep(5)
         XCTAssertTrue(loginButton.exists, "Кнопка входа не появилась после выхода")
     }
 }
