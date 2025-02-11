@@ -15,6 +15,7 @@ protocol AuthViewControllerDelegate: AnyObject {
     func didAuthenticate(_ vc: AuthViewController)
 }
 final class AuthViewController: UIViewController, WebViewViewControllerDelegate {
+    @IBOutlet weak var logInButton: UIButton!
     
     // MARK: - Constants
     
@@ -33,6 +34,8 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        logInButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+
     }
     
     // MARK: - Navigation
