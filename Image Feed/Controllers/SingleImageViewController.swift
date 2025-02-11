@@ -2,7 +2,7 @@
 //  SingleImageViewController.swift
 //  Image Feed
 //
-//  Created by Kaider on 05.09.2024.
+//  Created by Kaider on 02.02.2025
 //
 
 import UIKit
@@ -61,32 +61,28 @@ final class SingleImageViewController: UIViewController {
     // MARK: - Private Methods
     
     private func loadLargeImage() {
-        guard let largeImageURL = largeImageURL else { return }
-        
-        // Показываем индикаторр загрузки
-        UIBlockingProgressHUD.show()
-        
-        imageView.kf.setImage(
-            with: largeImageURL,
-            options: [], // Можно добавить дополнительные опции, если нужно
-            completionHandler: { [weak self] result in
-                // Скрываем индикатор загрузки после завершения загрузки
-                UIBlockingProgressHUD.dismiss()
-                
-                // Дополнительная обработка результата, если необходимо
-                switch result {
-                case .success(let value):
-                    print("Изображение успешно загружено: \(value.source.url?.absoluteString ?? "Неизвестный URL")")
-                case .failure(let error):
-                    print("Ошибка загрузки изображения: \(error.localizedDescription)")
-                    // покажем пользователю сообщение об ошибке или заглушку
-                    DispatchQueue.main.async {
-                        self?.imageView.image = UIImage(named: "placeholder_image")
+            guard let largeImageURL = largeImageURL else { return }
+            
+            // Показываем индикатор загрузки
+            UIBlockingProgressHUD.show()
+            
+            imageView.kf.setImage(
+                with: largeImageURL,
+                options: [],
+                completionHandler: { [weak self] result in
+                    // Скрываем индикатор загрузки после завершения загрузки
+                    UIBlockingProgressHUD.dismiss()
+                    
+                    // Дополнительная обработка результата, если необходимо
+                    switch result {
+                    case .success(let value):
+                        print("Изображение успешно загружено: \(value.source.url?.absoluteString ?? "Неизвестный URL")")
+                    case .failure(let error):
+                        print("Ошибка загрузки изображения: \(error.localizedDescription)")
                     }
                 }
-            }
-        )
-    }
+            )
+        }
     
     private func showError() {
         let alert = UIAlertController(

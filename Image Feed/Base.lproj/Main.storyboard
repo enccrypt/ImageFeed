@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -41,6 +41,7 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdE-8c-JJO" userLabel="Like Button">
                                                     <rect key="frame" x="333" y="4" width="44" height="44"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="LikeButton"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="TdL-nv-CnJ"/>
                                                         <constraint firstAttribute="width" constant="44" id="ldh-lZ-Nav"/>
@@ -129,6 +130,7 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSl-GQ-yti">
                                 <rect key="frame" x="8" y="11" width="48" height="48"/>
+                                <accessibility key="accessibilityConfiguration" hint="BackButton" identifier="BackButton" label="BackButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="9yv-UV-BqQ"/>
                                     <constraint firstAttribute="width" constant="48" id="fnb-Sf-6l9"/>
@@ -184,14 +186,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmu-MO-KRn">
-                                <rect key="frame" x="25" y="699" width="343" height="48"/>
+                                <rect key="frame" x="52.666666666666657" y="699" width="288" height="48"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="OIw-Ru-eS8"/>
-                                    <constraint firstAttribute="width" constant="343" id="UGs-2p-lq0"/>
+                                    <constraint firstAttribute="width" constant="288" id="UGs-2p-lq0"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Войти" titleAlignment="center">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="22"/>
+                                    <fontDescription key="titleFontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
                                     <color key="baseForegroundColor" name="YPBlack"/>
                                     <color key="baseBackgroundColor" name="YPWhite"/>
                                 </buttonConfiguration>
@@ -224,6 +227,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="496-8K-CsU"/>
                     <connections>
+                        <outlet property="logInButton" destination="kmu-MO-KRn" id="3a6-pe-gs6"/>
                         <outlet property="view" destination="DV7-Ss-kLy" id="u37-JZ-FQ8"/>
                     </connections>
                 </viewController>
@@ -280,7 +284,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="r2W-Ve-dCo"/>
                     <connections>
-                        <outlet property="UIProgressView" destination="U9T-O6-d7N" id="J0i-fj-yiB"/>
+                        <outlet property="progressView" destination="U9T-O6-d7N" id="1H9-wd-hh4"/>
                         <outlet property="webView" destination="ocN-EQ-47I" id="zzo-oL-TFZ"/>
                     </connections>
                 </viewController>
